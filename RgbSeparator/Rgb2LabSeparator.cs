@@ -1,5 +1,7 @@
-﻿using System.Numerics;
+﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Single;
 using rgb_separation.model;
+using System.Runtime.InteropServices;
 
 namespace rgb_separation;
 
@@ -20,42 +22,42 @@ internal class Rgb2LabSeparator: IRgbSeparator
 
     public void separate(Color sourceColor)
     {
-        var normalisedColor = new Vector3(sourceColor.R / 255f, sourceColor.G / 255f, sourceColor.B / 255f);
+        var normalisedColor = DenseVector.OfArray( new float[] { sourceColor.R / 255f, sourceColor.G / 255f, sourceColor.B / 255f });
         var illuminantVar = getIlluminantVars();
-        var y = 0.299f * normalisedColor.X + 0.587f * normalisedColor.Y + 0.114f * normalisedColor.Z;
-        var red = new Vector3(
-            labSettings.Profile.RedPrimary.X * y / labSettings.Profile.RedPrimary.Y,
-            y,
-            (1-labSettings.Profile.RedPrimary.X * y / labSettings.Profile.RedPrimary.Y - y) * 
-            labSettings.Profile.RedPrimary.X * y / labSettings.Profile.RedPrimary.Y
-        );
-        var green = new Vector3(
-            labSettings.Profile.GreenPrimary.X * y / labSettings.Profile.GreenPrimary.Y,
-            y,
-            (1-labSettings.Profile.GreenPrimary.X * y / labSettings.Profile.GreenPrimary.Y - y) * 
-            labSettings.Profile.GreenPrimary.X * y / labSettings.Profile.GreenPrimary.Y
-        );
-        var blue = new Vector3(
-            labSettings.Profile.BluePrimary.X * y / labSettings.Profile.BluePrimary.Y,
-            y,
-            (1-labSettings.Profile.BluePrimary.X * y / labSettings.Profile.BluePrimary.Y - y) * 
-            labSettings.Profile.BluePrimary.X * y / labSettings.Profile.BluePrimary.Y
-        );
-        float finalX = normalisedColor.X * red.X + normalisedColor.Y * green.X + normalisedColor.Y * blue.X;
-        float finalY = normalisedColor.X * red.Y + normalisedColor.Y * green.Y + normalisedColor.Y * blue.Y;
-        float finalZ = normalisedColor.X * red.Z + normalisedColor.Y * green.Z + normalisedColor.Y * blue.Z;
+        var illuminants = DenseVector.OfArray(new float[] { illuminantVar[0] / 100f , illuminantVar[1] / 100f , illuminantVar[2] / 100f });
 
-        float cielabYY = cielab2CiexyzFunc(finalY / illuminantVar.Y);
+        var inputR = new float[] { labSettings.Profile.RedPrimary.X, labSettings.Profile.RedPrimary.Y, 1 - labSettings.Profile.RedPrimary.X - labSettings.Profile.RedPrimary.Y };
+        var inputG = new float[] { labSettings.Profile.GreenPrimary.X, labSettings.Profile.GreenPrimary.Y, 1 - labSettings.Profile.GreenPrimary.X - labSettings.Profile.GreenPrimary.Y };
+        var inputB = new float[] { labSettings.Profile.BluePrimary.X, labSettings.Profile.BluePrimary.Y, 1 - labSettings.Profile.BluePrimary.X - labSettings.Profile.BluePrimary.Y};       
+        Matrix<float> inputMatrix = DenseMatrix.OfColumnArrays(new float[][] { inputR, inputG, inputB });
+        Vector<float> SRGB = DenseVector.OfArray(new float[] { 0f, 0f, 0f });
+        inputMatrix.Solve(illuminants, SRGB);
+
+        var RGB2XYZ = DenseMatrix.OfRowArrays(new float[][]{
+            new[] {inputMatrix[0,0] * SRGB[0], inputMatrix[0, 1] * SRGB[1], inputMatrix[0, 2] * SRGB[2] },
+            new[] {inputMatrix[1,0] * SRGB[0], inputMatrix[1, 1] * SRGB[1], inputMatrix[1, 2] * SRGB[2] },
+            new[] {inputMatrix[2,0] * SRGB[0], inputMatrix[2, 1] * SRGB[1], inputMatrix[2, 2] * SRGB[2] }
+        });
+        var final = RGB2XYZ.Multiply(normalisedColor);
+        float gamma = labSettings.Gamma;
+        var gamminized = DenseVector.OfArray(new float[]
+        {
+            (float)Math.Pow(final[0] , 1/ gamma),
+            (float)Math.Pow(final[1] , 1/ gamma),
+            (float)Math.Pow(final[2] , 1/ gamma)
+        });
+
+        float cielabYY = ciexyz2CielabFunc(final[1] / illuminants[1]);
         float l = 116 * cielabYY - 16;
-        float a = 500 * (cielab2CiexyzFunc(finalX / illuminantVar.X) - cielabYY);
-        float b = 200 * (cielabYY - cielab2CiexyzFunc(finalZ / illuminantVar.Z));
+        float a = 500 * (ciexyz2CielabFunc(final[0] / illuminants[0]) - cielabYY);
+        float b = 200 * (cielabYY - ciexyz2CielabFunc(final[2] / illuminants[2]));
          
         lChannel = Color.FromArgb((int)(l), (int)(l), (int)(l));
         aChannel = Color.FromArgb((int)(a + 127), (int)(128 - a), 127);
         bChannel = Color.FromArgb((int)(b + 127), 127, (int)(128 - b));
     }
 
-    private float cielab2CiexyzFunc(float t)
+    private float ciexyz2CielabFunc(float t)
     {
         float delta = 6f / 29;
         if (t > Math.Pow(delta, 3))
@@ -63,9 +65,9 @@ internal class Rgb2LabSeparator: IRgbSeparator
         return (float)(t / 3 * Math.Pow(delta, 2) + 4f / 29);
     }
     
-    private Vector3 getIlluminantVars()
+    private Vector<float> getIlluminantVars()
     {
-        return new Vector3(95.0489f, 100f, 108.84f);
+        return DenseVector.OfArray(new float[]  { 95.0489f, 100f, 108.84f});
     }
 
     public Color getFirstChannelColor()

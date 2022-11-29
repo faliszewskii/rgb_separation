@@ -35,11 +35,12 @@ namespace rgb_separation
                 for(int i=0; i<SourceImage.Width; i++)
                 {
                     var sourceColor = SourceImage.GetPixel(i, j);
-                    converters[ColorModel].separate(sourceColor);
+                    var converter = converters[ColorModel];
+                    converter.separate(sourceColor);
                     
-                    FirstChannel.SetPixel(i, j, converters[ColorModel].getFirstChannelColor());
-                    SecondChannel.SetPixel(i, j, converters[ColorModel].getSecondChannelColor());
-                    ThirdChannel.SetPixel(i, j, converters[ColorModel].getThirdChannelColor());
+                    FirstChannel.SetPixel(i, j, converter.getFirstChannelColor());
+                    SecondChannel.SetPixel(i, j, converter.getSecondChannelColor());
+                    ThirdChannel.SetPixel(i, j, converter.getThirdChannelColor());
                 }
             }
         }

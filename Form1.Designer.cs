@@ -39,7 +39,6 @@ namespace rgb_separation
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toGrayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.separateChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetColorModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yCbCrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,24 +151,16 @@ namespace rgb_separation
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toGrayscaleToolStripMenuItem,
             this.separateChannelsToolStripMenuItem,
             this.targetColorModelToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
             // 
-            // toGrayscaleToolStripMenuItem
-            // 
-            this.toGrayscaleToolStripMenuItem.Name = "toGrayscaleToolStripMenuItem";
-            this.toGrayscaleToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.toGrayscaleToolStripMenuItem.Text = "To Grayscale";
-            this.toGrayscaleToolStripMenuItem.Click += new System.EventHandler(this.toGrayscaleToolStripMenuItem_Click);
-            // 
             // separateChannelsToolStripMenuItem
             // 
             this.separateChannelsToolStripMenuItem.Name = "separateChannelsToolStripMenuItem";
-            this.separateChannelsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.separateChannelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.separateChannelsToolStripMenuItem.Text = "Separate Channels";
             this.separateChannelsToolStripMenuItem.Click += new System.EventHandler(this.separateChannelsToolStripMenuItem_Click);
             // 
@@ -180,7 +171,7 @@ namespace rgb_separation
             this.hSVToolStripMenuItem,
             this.labToolStripMenuItem});
             this.targetColorModelToolStripMenuItem.Name = "targetColorModelToolStripMenuItem";
-            this.targetColorModelToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.targetColorModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.targetColorModelToolStripMenuItem.Text = "Target Color Model";
             // 
             // yCbCrToolStripMenuItem
@@ -499,7 +490,6 @@ namespace rgb_separation
         private ToolStripMenuItem loadImageToolStripMenuItem;
         private ToolStripMenuItem saveOutputToolStripMenuItem;
         private ToolStripMenuItem editToolStripMenuItem;
-        private ToolStripMenuItem toGrayscaleToolStripMenuItem;
         private ToolStripMenuItem separateChannelsToolStripMenuItem;
         private ToolStripMenuItem targetColorModelToolStripMenuItem;
         private ToolStripMenuItem yCbCrToolStripMenuItem;

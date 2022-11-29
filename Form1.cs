@@ -55,11 +55,6 @@ namespace rgb_separation
 
         }
 
-        private void toGrayscaleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void separateChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rgbSeparatorApp.separateChannels();

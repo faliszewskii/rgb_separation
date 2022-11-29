@@ -15,13 +15,13 @@ namespace rgb_separation.model
 
         public ColorProfile(
             Vector2 redPrimary, 
-            Vector2 bluePrimary, 
-            Vector2 greenPrimary
+            Vector2 greenPrimary,
+            Vector2 bluePrimary
             )
         {
             RedPrimary = redPrimary;
-            BluePrimary = bluePrimary;
             GreenPrimary = greenPrimary;
+            BluePrimary = bluePrimary;
         }
 
         public ColorProfile()
