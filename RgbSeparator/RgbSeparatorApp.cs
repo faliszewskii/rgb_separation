@@ -6,7 +6,7 @@ namespace rgb_separation
     internal class RgbSeparatorApp
     {
         public ColorModel ColorModel { get; set; }
-        private LabSettings LabSettings { get; set; }
+        public LabSettings LabSettings { get; set; }
 
         public Bitmap SourceImage { get; set; }
         public Bitmap FirstChannel { get; set; }
@@ -22,7 +22,10 @@ namespace rgb_separation
             SecondChannel = new Bitmap(source.Width, source.Height);
             ThirdChannel = new Bitmap(source.Width, source.Height);
             ColorModel = ColorModel.YCbCr;
-            LabSettings = new LabSettings(SRgbPreset, d65Preset, gammaPreset);
+            LabSettings = new LabSettings(
+                PredefinedColorProfiles[PredefinedColorProfile.SRgb],
+                PredefinedIlluminants[PredefinedIlluminant.D65],
+                GammaPreset);
             converters.Add(ColorModel.YCbCr , new Rgb2YCbCrSeparator());
             converters.Add(ColorModel.Hsv , new Rgb2HsvSeparator());
             converters.Add(ColorModel.Lab , new Rgb2LabSeparator(LabSettings));

@@ -2,9 +2,13 @@
 
 namespace rgb_separation.model
 {
-    enum PredefinedColorProfile
+    internal enum PredefinedColorProfile
     {
-        sRGB,
+        SRgb,
+        AdobeRgb,
+        AppleRgb,
+        CieRgb,
+        WideGamut,
     }
 
     internal class ColorProfile

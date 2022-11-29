@@ -27,7 +27,7 @@ internal class Rgb2HsvSeparator: IRgbSeparator
         
         float s = rgbMax!= 0 ? chroma / rgbMax: 0;
         float v = rgbMax;
-
+        
          
         hChannel = Color.FromArgb((int)(h / 360 * 255), (int)(h / 360 * 255), (int)(h / 360 * 255));
         sChannel = Color.FromArgb((int)(s * 255), (int)(s * 255), (int)(s * 255));

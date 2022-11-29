@@ -4,7 +4,18 @@ namespace rgb_separation.model
 {
     internal enum PredefinedIlluminant
     {
+        A,
+        B,
+        C,
+        D50,
+        D55,
         D65,
+        D75,
+        _9300K,
+        E,
+        F2,
+        F7,
+        F11
     }
     internal class Illuminant
     {

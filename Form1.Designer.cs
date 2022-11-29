@@ -70,6 +70,7 @@ namespace rgb_separation
             this.secondChannelLabel = new System.Windows.Forms.Label();
             this.thirdChannelLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.thirdChannelImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstChanelImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelImage)).BeginInit();
@@ -447,7 +448,12 @@ namespace rgb_separation
             // 
             // openFileDialog
             // 
-            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.FileName = "";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.AddExtension = true;
+            this.saveFileDialog.DefaultExt = "png";
             // 
             // Form1
             // 
@@ -521,5 +527,6 @@ namespace rgb_separation
         private TextBox redXInput;
         private TextBox redYInput;
         private OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
     }
 }
