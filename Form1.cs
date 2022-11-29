@@ -161,7 +161,7 @@ namespace rgb_separation
         private void redXInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(redXInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(redXInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.RedPrimary;
             rgbSeparatorApp.LabSettings.Profile.RedPrimary = currentVector with { X = parsedValue };
         }
@@ -169,7 +169,7 @@ namespace rgb_separation
         private void redYInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(redYInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(redYInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.RedPrimary;
             rgbSeparatorApp.LabSettings.Profile.RedPrimary = currentVector with { Y = parsedValue };
         }
@@ -177,7 +177,7 @@ namespace rgb_separation
         private void greenXInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(greenXInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(greenXInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.GreenPrimary;
             rgbSeparatorApp.LabSettings.Profile.GreenPrimary = currentVector with { X = parsedValue };
         }
@@ -185,7 +185,7 @@ namespace rgb_separation
         private void greenYInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(greenYInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(greenYInput.Text,NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.GreenPrimary;
             rgbSeparatorApp.LabSettings.Profile.GreenPrimary = currentVector with { Y = parsedValue };
         }
@@ -193,7 +193,7 @@ namespace rgb_separation
         private void blueXInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(blueXInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(blueXInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.BluePrimary;
             rgbSeparatorApp.LabSettings.Profile.BluePrimary = currentVector with { X = parsedValue };
         }
@@ -201,7 +201,7 @@ namespace rgb_separation
         private void blueYInput_TextChanged(object sender, EventArgs e)
         {
             colorProfileComboBox.Text = "Custom";
-            if (!float.TryParse(blueYInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(blueYInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Profile.BluePrimary;
             rgbSeparatorApp.LabSettings.Profile.BluePrimary = currentVector with { Y = parsedValue };
         }
@@ -209,7 +209,7 @@ namespace rgb_separation
         private void whiteXInput_TextChanged(object sender, EventArgs e)
         {
             illuminantComboBox.Text = "Custom";
-            if (!float.TryParse(whiteXInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(whiteXInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Illuminant.whitePoint;
             rgbSeparatorApp.LabSettings.Illuminant.whitePoint = currentVector with { X = parsedValue };
         }
@@ -217,14 +217,14 @@ namespace rgb_separation
         private void whiteYInput_TextChanged(object sender, EventArgs e)
         {
             illuminantComboBox.Text = "Custom";
-            if (!float.TryParse(whiteYInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(whiteYInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             var currentVector = rgbSeparatorApp.LabSettings.Illuminant.whitePoint;
             rgbSeparatorApp.LabSettings.Illuminant.whitePoint = currentVector with { Y = parsedValue };
         }
 
         private void gammaInput_TextChanged(object sender, EventArgs e)
         {
-            if (!float.TryParse(gammaInput.Text, out float parsedValue)) return;
+            if (!float.TryParse(gammaInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             rgbSeparatorApp.LabSettings.Gamma = parsedValue;
         }
     }

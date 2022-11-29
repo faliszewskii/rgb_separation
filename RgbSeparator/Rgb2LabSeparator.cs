@@ -52,9 +52,9 @@ internal class Rgb2LabSeparator: IRgbSeparator
         float a = 500 * (ciexyz2CielabFunc(gamminized[0] / illuminant[0]) - cielabYy);
         float b = 200 * (cielabYy - ciexyz2CielabFunc(gamminized[2] / illuminant[2]));
 
-        l = Math.Max(0, Math.Min(l, 255));
-        a = Math.Max(0, Math.Min(a, 255));
-        b = Math.Max(0, Math.Min(b, 255));
+        l = float.IsNaN(l)? 0: Math.Max(0, Math.Min(l, 255));
+        a = float.IsNaN(a)? -127: Math.Max(0, Math.Min(a, 126));
+        b = float.IsNaN(b)? -127: Math.Max(0, Math.Min(b, 126));
 
         lChannel = Color.FromArgb((int)l, (int)l, (int)l);
         aChannel = Color.FromArgb((int)(a + 127), (int)(128 - a), 127);
