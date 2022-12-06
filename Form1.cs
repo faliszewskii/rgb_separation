@@ -8,6 +8,7 @@ namespace rgb_separation
     public partial class Form1 : Form
     {
         private readonly RgbSeparatorApp rgbSeparatorApp;
+        private readonly ImageGenerator imageGenerator;
         private string imageName = string.Empty;
         private readonly List<PredefinedColorProfileComboBoxModel> predefinedColorProfileComboBoxList = new()
         {
@@ -42,6 +43,7 @@ namespace rgb_separation
             illuminantComboBox.DataSource = predefinedIlluminantComboBoxList;
             illuminantComboBox.SelectedIndex = 5;
             rgbSeparatorApp = new RgbSeparatorApp(new Bitmap(sourceImage.Width, sourceImage.Height));
+            imageGenerator = new ImageGenerator(50, 32);
             sourceImage.Image = rgbSeparatorApp.SourceImage;
             firstChanelImage.Image = rgbSeparatorApp.FirstChannel;
             secondChannelImage.Image = rgbSeparatorApp.SecondChannel;
@@ -113,6 +115,8 @@ namespace rgb_separation
             sourceImage.Image = rgbSeparatorApp.SourceImage;
 
         }
+
+        
 
         private void separateChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -226,6 +230,47 @@ namespace rgb_separation
         {
             if (!float.TryParse(gammaInput.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float parsedValue)) return;
             rgbSeparatorApp.LabSettings.Gamma = parsedValue;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            int padding = 10;
+            imageGenerator.V = vTrackBar.Value;
+            int size = Math.Min(sourceImage.Width, sourceImage.Height);            
+            rgbSeparatorApp.SourceImage = imageGenerator.GenerateImage(size, padding);
+            sourceImage.Image = rgbSeparatorApp.SourceImage;
+            rgbSeparatorApp.separateChannels();
+            sourceImage.Refresh();
+            firstChanelImage.Refresh();
+            secondChannelImage.Refresh();
+            thirdChannelImage.Refresh();
+        }
+
+        private void generateHSVImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int padding = 10;
+            int size = Math.Min(sourceImage.Width, sourceImage.Height);            
+            rgbSeparatorApp.SourceImage = imageGenerator.GenerateImage(size, padding);
+            sourceImage.Image = rgbSeparatorApp.SourceImage;
+            rgbSeparatorApp.separateChannels();
+            sourceImage.Refresh();
+            firstChanelImage.Refresh();
+            secondChannelImage.Refresh();
+            thirdChannelImage.Refresh();
+        }
+
+        private void quantifierTrackbar_Scroll(object sender, EventArgs e)
+        {
+            int padding = 10;
+            int size = Math.Min(sourceImage.Width, sourceImage.Height);
+            imageGenerator.Quantifier = (int)(size * (quantifierTrackbar.Value / 100f)); 
+            rgbSeparatorApp.SourceImage = imageGenerator.GenerateImage(size, padding);
+            sourceImage.Image = rgbSeparatorApp.SourceImage;
+            rgbSeparatorApp.separateChannels();
+            sourceImage.Refresh();
+            firstChanelImage.Refresh();
+            secondChannelImage.Refresh();
+            thirdChannelImage.Refresh();
         }
     }
 }

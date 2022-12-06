@@ -44,6 +44,7 @@ namespace rgb_separation
             this.yCbCrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateHSVImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.gammaInput = new System.Windows.Forms.TextBox();
             this.whiteYInput = new System.Windows.Forms.TextBox();
@@ -71,12 +72,18 @@ namespace rgb_separation
             this.thirdChannelLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.vTrackBar = new System.Windows.Forms.TrackBar();
+            this.label11 = new System.Windows.Forms.Label();
+            this.quantifierTrackbar = new System.Windows.Forms.TrackBar();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.thirdChannelImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstChanelImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.labSettingsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quantifierTrackbar)).BeginInit();
             this.SuspendLayout();
             // 
             // thirdChannelImage
@@ -153,7 +160,8 @@ namespace rgb_separation
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.separateChannelsToolStripMenuItem,
-            this.targetColorModelToolStripMenuItem});
+            this.targetColorModelToolStripMenuItem,
+            this.generateHSVImageToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -161,7 +169,7 @@ namespace rgb_separation
             // separateChannelsToolStripMenuItem
             // 
             this.separateChannelsToolStripMenuItem.Name = "separateChannelsToolStripMenuItem";
-            this.separateChannelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.separateChannelsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.separateChannelsToolStripMenuItem.Text = "Separate Channels";
             this.separateChannelsToolStripMenuItem.Click += new System.EventHandler(this.separateChannelsToolStripMenuItem_Click);
             // 
@@ -172,7 +180,7 @@ namespace rgb_separation
             this.hSVToolStripMenuItem,
             this.labToolStripMenuItem});
             this.targetColorModelToolStripMenuItem.Name = "targetColorModelToolStripMenuItem";
-            this.targetColorModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.targetColorModelToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.targetColorModelToolStripMenuItem.Text = "Target Color Model";
             // 
             // yCbCrToolStripMenuItem
@@ -200,6 +208,13 @@ namespace rgb_separation
             this.labToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.labToolStripMenuItem.Text = "Lab";
             this.labToolStripMenuItem.Click += new System.EventHandler(this.labToolStripMenuItem_Click);
+            // 
+            // generateHSVImageToolStripMenuItem
+            // 
+            this.generateHSVImageToolStripMenuItem.Name = "generateHSVImageToolStripMenuItem";
+            this.generateHSVImageToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.generateHSVImageToolStripMenuItem.Text = "Generate HSV Image";
+            this.generateHSVImageToolStripMenuItem.Click += new System.EventHandler(this.generateHSVImageToolStripMenuItem_Click);
             // 
             // labSettingsGroupBox
             // 
@@ -446,20 +461,60 @@ namespace rgb_separation
             this.thirdChannelLabel.TabIndex = 10;
             this.thirdChannelLabel.Text = "Cr";
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "";
-            // 
             // saveFileDialog
             // 
-            this.saveFileDialog.AddExtension = true;
             this.saveFileDialog.DefaultExt = "png";
+            // 
+            // vTrackBar
+            // 
+            this.vTrackBar.Location = new System.Drawing.Point(789, 126);
+            this.vTrackBar.Maximum = 100;
+            this.vTrackBar.Name = "vTrackBar";
+            this.vTrackBar.Size = new System.Drawing.Size(280, 45);
+            this.vTrackBar.TabIndex = 11;
+            this.vTrackBar.Value = 50;
+            this.vTrackBar.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(773, 87);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(307, 30);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "V for image generation";
+            // 
+            // quantifierTrackbar
+            // 
+            this.quantifierTrackbar.Location = new System.Drawing.Point(789, 232);
+            this.quantifierTrackbar.Maximum = 100;
+            this.quantifierTrackbar.Minimum = 1;
+            this.quantifierTrackbar.Name = "quantifierTrackbar";
+            this.quantifierTrackbar.Size = new System.Drawing.Size(280, 45);
+            this.quantifierTrackbar.TabIndex = 13;
+            this.quantifierTrackbar.Value = 50;
+            this.quantifierTrackbar.Scroll += new System.EventHandler(this.quantifierTrackbar_Scroll);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Showcard Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label12.Location = new System.Drawing.Point(773, 191);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(303, 30);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "Saturation quantifier";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 700);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.quantifierTrackbar);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.vTrackBar);
             this.Controls.Add(this.thirdChannelLabel);
             this.Controls.Add(this.secondChannelLabel);
             this.Controls.Add(this.firstChannelLabel);
@@ -480,6 +535,8 @@ namespace rgb_separation
             this.menuStrip1.PerformLayout();
             this.labSettingsGroupBox.ResumeLayout(false);
             this.labSettingsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quantifierTrackbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -528,5 +585,10 @@ namespace rgb_separation
         private TextBox redYInput;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        private TrackBar vTrackBar;
+        private ToolStripMenuItem generateHSVImageToolStripMenuItem;
+        private Label label11;
+        private TrackBar quantifierTrackbar;
+        private Label label12;
     }
 }

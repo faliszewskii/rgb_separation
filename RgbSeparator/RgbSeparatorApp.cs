@@ -33,14 +33,24 @@ namespace rgb_separation
 
         public void separateChannels()
         {
-            for(int j=0; j<SourceImage.Height; j++)
+            
+            using (SolidBrush brush = new SolidBrush(Color.White))
+            {
+                using (Graphics gfx = Graphics.FromImage(FirstChannel))
+                    gfx.FillRectangle(brush, 0, 0, FirstChannel.Width, FirstChannel.Height );
+                using (Graphics gfx = Graphics.FromImage(SecondChannel))
+                    gfx.FillRectangle(brush, 0, 0, SecondChannel.Width, SecondChannel.Height);
+                using (Graphics gfx = Graphics.FromImage(ThirdChannel))
+                    gfx.FillRectangle(brush, 0, 0, ThirdChannel.Width, ThirdChannel.Height);
+            }
+            for (int j=0; j<SourceImage.Height; j++)
             {
                 for(int i=0; i<SourceImage.Width; i++)
                 {
                     var sourceColor = SourceImage.GetPixel(i, j);
                     var converter = converters[ColorModel];
                     converter.separate(sourceColor);
-                    
+
                     FirstChannel.SetPixel(i, j, converter.getFirstChannelColor());
                     SecondChannel.SetPixel(i, j, converter.getSecondChannelColor());
                     ThirdChannel.SetPixel(i, j, converter.getThirdChannelColor());
